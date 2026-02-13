@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lobby Screen Waiting Hall</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4252f",
+                        "background-light": "#f8f5f6",
+                        "background-dark": "#221011",
+                        "gold": {
+                            100: "#FFF9C4",
+                            300: "#FFF176",
+                            500: "#FFD700",
+                            700: "#FBC02D",
+                            900: "#F57F17",
+                        }
+                    },
+                    fontFamily: {
+                        "display": ["Noto Sans SC", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                    backgroundImage: {
+                        'lantern-pattern': "radial-gradient(circle at 50% 0%, rgba(244, 37, 47, 0.4) 0%, rgba(34, 16, 17, 0) 70%)",
+                        'gold-gradient': "linear-gradient(135deg, #FBC02D 0%, #FFD700 50%, #FFF176 100%)",
+                        'gold-border': "linear-gradient(180deg, #FFF59D 0%, #FBC02D 100%)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+        .gold-text-shadow {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .lantern-glow {
+            box-shadow: 0 0 40px rgba(244, 37, 47, 0.3);
+        }
+        .pattern-overlay {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f4252f' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        @keyframes breathe {
+            0% { opacity: 0.4; transform: scale(0.95); }
+            50% { opacity: 0.7; transform: scale(1); }
+            100% { opacity: 0.4; transform: scale(0.95); }
+        }
+        .animate-breathe {
+            animation: breathe 3s infinite ease-in-out;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen relative overflow-hidden flex flex-col items-center justify-between py-6 px-4 selection:bg-primary selection:text-white">
+<div class="fixed inset-0 pointer-events-none z-0 bg-lantern-pattern"></div>
+<div class="fixed inset-0 pointer-events-none z-0 pattern-overlay"></div>
+<div class="fixed top-0 left-8 w-1 bg-primary/30 h-24 z-0 rounded-b-full"></div>
+<div class="fixed top-24 left-4 w-10 h-12 bg-primary/20 rounded-xl blur-xl z-0"></div>
+<div class="fixed top-0 right-8 w-1 bg-primary/30 h-32 z-0 rounded-b-full"></div>
+<div class="fixed top-32 right-4 w-10 h-12 bg-primary/20 rounded-xl blur-xl z-0"></div>
+<header class="w-full max-w-md flex justify-between items-center z-10 pt-2 mb-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full glass-panel text-white/90 hover:bg-white/10 transition-colors active:scale-95">
+<span class="material-icons">arrow_back</span>
+</button>
+<div class="text-white/80 text-base font-medium tracking-wide">游戏大厅</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full glass-panel text-white/90 hover:bg-white/10 transition-colors active:scale-95">
+<span class="material-icons">settings</span>
+</button>
+</header>
+<main class="flex-1 w-full max-w-md z-10 flex flex-col items-center gap-8 relative">
+<div class="w-full relative group">
+<div class="absolute inset-0 bg-primary/20 blur-2xl rounded-xl transform group-hover:bg-primary/30 transition-all duration-700"></div>
+<div class="relative glass-card rounded-xl p-6 flex flex-col items-center justify-center text-center overflow-hidden">
+<div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-gold-300/50 rounded-tl-lg"></div>
+<div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-gold-300/50 rounded-tr-lg"></div>
+<div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-gold-300/50 rounded-bl-lg"></div>
+<div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-gold-300/50 rounded-br-lg"></div>
+<div class="mb-2">
+<span class="inline-block px-3 py-1 bg-primary/20 border border-primary/30 rounded-full text-xs font-semibold text-primary-200 uppercase tracking-widest">房间号</span>
+</div>
+<h1 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 tracking-tight flex items-center gap-2">
+                    8888
+                    <span class="material-icons text-gold-500 text-2xl animate-pulse cursor-pointer hover:text-gold-300" title="复制">content_copy</span>
+</h1>
+<p class="mt-2 text-white/50 text-sm">等待玩家加入...</p>
+</div>
+</div>
+<div class="w-full grid grid-cols-2 gap-4 mt-4">
+<div class="flex flex-col items-center gap-3 p-4 rounded-xl hover:bg-white/5 transition-colors">
+<div class="relative">
+<div class="absolute -inset-1 rounded-full bg-gradient-to-br from-gold-300 to-primary opacity-80 blur-sm"></div>
+<div class="relative w-20 h-20 rounded-full border-2 border-gold-300 overflow-hidden bg-background-dark shadow-xl">
+<img alt="Smiling young man avatar" class="w-full h-full object-cover" data-alt="User avatar of a smiling young man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDRyvKR7ansmd0HjeJaC4SDYynTz__gOWaut8huaXzoVFucCwM5fUe936fkknhU4-trj4xk-KoxcN_Tkz5_g5jL4bO4JKjR-WgcPg39jE3RQEXiZH0021xOYfXQvmUX8b_NpJMSJpfeP4K9DTsJE_iTJsVmblzxYXci2xdLkuZxKVV5khhBLquRQHi8fOuls9KtOcTdHnTZ5rrCQ-tOet3BnNVE6cMr2FliIt6GWVqho3QatpnC_-lldRgCx5kP_9WLBiF70ayEPI"/>
+</div>
+<div class="absolute -bottom-1 -right-1 bg-gold-500 text-background-dark text-[10px] font-bold px-2 py-0.5 rounded-full border border-background-dark shadow-sm">
+                        房主
+                    </div>
+</div>
+<div class="text-center">
+<h3 class="text-white font-semibold text-base tracking-wide">DragonKing</h3>
+<div class="flex items-center justify-center gap-1 mt-1">
+<div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+<span class="text-xs text-white/40">已准备</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-center gap-3 p-4 rounded-xl hover:bg-white/5 transition-colors">
+<div class="relative">
+<div class="absolute -inset-1 rounded-full bg-gradient-to-br from-primary/60 to-transparent opacity-60 blur-sm"></div>
+<div class="relative w-20 h-20 rounded-full border-2 border-primary/30 overflow-hidden bg-background-dark shadow-xl">
+<img alt="Smiling woman avatar" class="w-full h-full object-cover grayscale-[30%] opacity-90" data-alt="User avatar of a smiling woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbS9k8jrpfOj2zV219JAy3PNIcZDUYxcxEpciAttbgxiSHln8CMmG5hjbS7JI5tTMbmkvB_G7muT5ccVBL4IgojcZb8SXp6WCkTjlYJmnD61sozRGZM7hnKGLtBoT-TzMtMeE8vZMOEYmwr47dNjHKZ5VHkDN0DTslZ5ZCfj8Y6Gclt7mgbzq94z-ar_QQBVnCbaURsv1XjuGumjovF-TdgrByv9rTnUAa03G1GFaYAL8JfZOPLLyn1kom6NV0NGcZoky0lYPCgU0"/>
+</div>
+</div>
+<div class="text-center">
+<h3 class="text-white font-semibold text-base tracking-wide">LuckyCat</h3>
+<div class="flex items-center justify-center gap-1 mt-1">
+<div class="w-1.5 h-1.5 rounded-full bg-white/20"></div>
+<span class="text-xs text-white/40">加入中...</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-center gap-3 p-4 rounded-xl group cursor-pointer hover:bg-white/5 transition-colors">
+<div class="relative w-20 h-20 rounded-full border-2 border-dashed border-white/20 flex items-center justify-center bg-white/5 group-hover:border-primary/50 group-hover:bg-primary/10 transition-all duration-300">
+<span class="material-icons text-white/20 text-3xl group-hover:text-primary/70 transition-colors animate-breathe">add</span>
+</div>
+<div class="text-center">
+<h3 class="text-white/30 font-medium text-sm tracking-wide group-hover:text-primary/70 transition-colors">等待中</h3>
+</div>
+</div>
+<div class="flex flex-col items-center gap-3 p-4 rounded-xl group cursor-pointer hover:bg-white/5 transition-colors">
+<div class="relative w-20 h-20 rounded-full border-2 border-dashed border-white/20 flex items-center justify-center bg-white/5 group-hover:border-primary/50 group-hover:bg-primary/10 transition-all duration-300">
+<span class="material-icons text-white/20 text-3xl group-hover:text-primary/70 transition-colors animate-breathe">add</span>
+</div>
+<div class="text-center">
+<h3 class="text-white/30 font-medium text-sm tracking-wide group-hover:text-primary/70 transition-colors">等待中</h3>
+</div>
+</div>
+</div>
+</main>
+<footer class="w-full max-w-md z-10 pt-4 pb-4">
+<button class="w-full mb-6 flex items-center justify-center gap-2 text-white/60 hover:text-white transition-colors text-sm py-2">
+<span class="material-icons text-lg">share</span>
+            分享邀请链接
+        </button>
+<button class="w-full relative group active:scale-[0.98] transition-transform duration-100">
+<div class="absolute -inset-1 bg-gold-500/40 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="relative h-16 w-full rounded-full bg-gold-gradient shadow-lg overflow-hidden flex items-center justify-center border-t border-white/40 border-b-4 border-gold-900/30">
+<div class="absolute top-0 left-0 right-0 h-1/2 bg-white/20 rounded-t-full pointer-events-none"></div>
+<div class="absolute -inset-full top-0 block h-full w-1/2 -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-shine" style="animation: shine 2s infinite;"></div>
+<span class="text-background-dark font-extrabold text-xl tracking-widest gold-text-shadow flex items-center gap-2 z-10">
+                    开始游戏
+                    <span class="material-icons text-2xl font-bold">play_arrow</span>
+</span>
+</div>
+</button>
+</footer>
+<div class="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background-dark to-transparent pointer-events-none z-0"></div>
+
+</body></html>

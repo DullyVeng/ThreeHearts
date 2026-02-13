@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Join Room Keypad Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4252f",
+                        "background-light": "#f8f5f6",
+                        "background-dark": "#221011",
+                        "gold-light": "#FDE68A",
+                        "gold-dark": "#D97706",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Sans SC", "Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                    backgroundImage: {
+                        'gold-gradient': 'linear-gradient(135deg, #FDE68A 0%, #D97706 100%)',
+                        'gold-gradient-text': '-webkit-linear-gradient(135deg, #FDE68A 0%, #D97706 100%)',
+                        'dark-gradient': 'linear-gradient(to bottom right, #221011, #3f0d12)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .text-gold-gradient {
+            background: linear-gradient(to bottom, #FDE68A, #D97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }.btn-texture {
+            background-color: #2D1B1C;
+            box-shadow: 
+                inset 0 1px 1px rgba(255, 255, 255, 0.1), 
+                0 4px 6px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(244, 37, 47, 0.1);
+        }
+        .btn-texture:active {
+            transform: scale(0.95);
+            background-color: #3f191b;
+        }.bg-noise {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen flex items-center justify-center overflow-hidden relative">
+<div class="absolute inset-0 bg-dark-gradient z-0"></div>
+<div class="absolute inset-0 bg-noise z-0 pointer-events-none"></div>
+<div class="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] opacity-10 pointer-events-none z-0">
+<svg class="fill-primary animate-pulse" style="animation-duration: 4s;" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<path d="M100 180s-60-45-80-80a50 50 0 0 1 80-50 50 50 0 0 1 80 50c-20 35-80 80-80 80z"></path>
+</svg>
+</div>
+<main class="relative z-10 w-full max-w-md h-screen max-h-[900px] flex flex-col justify-between px-6 py-8">
+<header class="flex items-center justify-between pt-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors text-white">
+<span class="material-icons-round text-2xl">chevron_left</span>
+</button>
+<div class="text-white/60 text-sm font-medium tracking-wide">加入游戏</div>
+<div class="w-10"></div> 
+</header>
+<section class="flex flex-col items-center justify-center flex-grow space-y-10">
+<div class="text-center space-y-2">
+<h1 class="text-3xl font-bold text-white tracking-tight">请输入房间号</h1>
+<p class="text-white/50 text-sm">请输入4位房间号</p>
+</div>
+<div class="flex items-center justify-center gap-4 w-full px-4">
+<div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-primary/20 border-2 border-primary/50 flex items-center justify-center shadow-[0_0_15px_rgba(244,37,47,0.3)] transition-all duration-300">
+<span class="text-3xl font-bold text-white font-['Plus_Jakarta_Sans']">8</span>
+</div>
+<div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-primary/20 border-2 border-primary/50 flex items-center justify-center shadow-[0_0_15px_rgba(244,37,47,0.3)] transition-all duration-300">
+<span class="text-3xl font-bold text-white font-['Plus_Jakarta_Sans']">6</span>
+</div>
+<div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/5 border-2 border-white/20 flex items-center justify-center animate-pulse transition-all duration-300">
+<div class="w-2 h-2 rounded-full bg-white/30"></div>
+</div>
+<div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/5 border-2 border-transparent flex items-center justify-center transition-all duration-300">
+<div class="w-2 h-2 rounded-full bg-white/10"></div>
+</div>
+</div>
+<div class="h-6 flex items-center justify-center">
+</div>
+</section>
+<section class="pb-6">
+<div class="grid grid-cols-3 gap-x-6 gap-y-5 px-4 max-w-xs mx-auto">
+<button class="btn-texture w-20 h-20 rounded-full flex items-center justify-center group transition-all">
+<span class="text-3xl font-bold text-gold-gradient font-['Plus_Jakarta_Sans'] group-hover:scale-110 transition-transform">1</span>
+</button>
+<button class="btn-texture w-20 h-20 rounded-full flex items-center justify-center group transition-all">
+<span class="text-3xl font-bold text-gold-gradient font-['Plus_Jakarta_Sans'] group-hover:scale-110 transition-transform">2</span>
+</button>
+<button class="btn-texture w-20 h-20 rounded-full flex items-center justify-center group transition-all">
+<span class="text-3xl font-bold text-gold-gradient font-['Plus_Jakarta_Sans'] group-hover:scale-110 transition-transform">3</span>
+</button>
+<button class="btn-texture w-20 h-20 rounded-full flex items-center justify-center group transition-all">
+<span class="text-3xl font-bold text-gold-gradient font-['Plus_Jakarta_Sans'] group-hover:scale-110 transition-transform">4</span>
+</button>
+<button class="btn-texture w-20 h-20 rounded-full flex items-center justify-center group transition-all">
+<span class="text-3xl font-bold text-gold-gradient font-['Plus_Jakarta_Sans'] group-hover:scale-110 transition-transform">5</span>
+</button>
+<button class="btn-texture w-20 h-20 rounded-full flex items-center justify-center group transition-all">
+<span class="text-3xl font-bold text-gold-gradient font-['Plus_Jakarta_Sans'] group-hover:scale-110 transition-transform">6</span>
+</button>
+<button class="btn-texture w-20 h-20 rounded-full flex items-center justify-center group transition-all">
+<span class="text-3xl font-bold text-gold-gradient font-['Plus_Jakarta_Sans'] group-hover:scale-110 transition-transform">7</span>
+</button>
+<button class="btn-texture w-20 h-20 rounded-full flex items-center justify-center group transition-all">
+<span class="text-3xl font-bold text-gold-gradient font-['Plus_Jakarta_Sans'] group-hover:scale-110 transition-transform">8</span>
+</button>
+<button class="btn-texture w-20 h-20 rounded-full flex items-center justify-center group transition-all">
+<span class="text-3xl font-bold text-gold-gradient font-['Plus_Jakarta_Sans'] group-hover:scale-110 transition-transform">9</span>
+</button>
+<div class="w-20 h-20 flex items-center justify-center">
+<button class="text-white/30 hover:text-white/60 transition-colors">
+<span class="material-icons-round text-2xl">help_outline</span>
+</button>
+</div>
+<button class="btn-texture w-20 h-20 rounded-full flex items-center justify-center group transition-all">
+<span class="text-3xl font-bold text-gold-gradient font-['Plus_Jakarta_Sans'] group-hover:scale-110 transition-transform">0</span>
+</button>
+<button class="w-20 h-20 rounded-full flex items-center justify-center hover:bg-white/5 active:bg-white/10 transition-all text-white/80">
+<span class="material-icons-round text-3xl">backspace</span>
+</button>
+</div>
+</section>
+</main>
+
+</body></html>

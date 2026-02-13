@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Scoring Dashboard Simplified Chinese</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2b90d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221e10",
+                        "festive-red": "#661414", 
+                        "festive-red-dark": "#3f0a0a",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "Noto Sans SC", "sans-serif"],
+                        "chinese": ["Noto Sans SC", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem", 
+                        "lg": "2rem", 
+                        "xl": "3rem", 
+                        "full": "9999px"
+                    },
+                    backgroundImage: {
+                        'gold-gradient': 'linear-gradient(135deg, #f2b90d 0%, #d49e00 100%)',
+                        'festive-gradient': 'linear-gradient(180deg, #661414 0%, #221e10 100%)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>.glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .text-glow {
+            text-shadow: 0 0 15px rgba(242, 185, 13, 0.4);
+        }
+        .gold-texture {
+            background-image: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.4) 0%, transparent 20%),
+                              linear-gradient(135deg, #f2b90d 0%, #b8860b 100%);
+        }.bg-noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+    </style>
+<style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-chinese bg-background-light dark:bg-background-dark text-slate-800 dark:text-white min-h-screen relative overflow-hidden">
+<div class="fixed inset-0 bg-festive-gradient -z-10"></div>
+<div class="bg-noise"></div>
+<div class="fixed top-[-10%] right-[-10%] w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-10 animate-pulse"></div>
+<div class="fixed bottom-[-10%] left-[-20%] w-80 h-80 bg-red-600/20 rounded-full blur-3xl -z-10"></div>
+<div class="max-w-md mx-auto h-screen flex flex-col relative z-10 pt-safe-top pb-safe-bottom px-6">
+<header class="pt-8 pb-6 flex items-center justify-between">
+<div>
+<span class="text-primary/60 text-sm font-semibold tracking-wider uppercase mb-1 block">2024 新年快乐</span>
+<h1 class="text-4xl font-extrabold text-primary text-glow tracking-tight">记分板</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 transition-colors group">
+<span class="material-icons-round text-primary/80 group-hover:text-primary">settings</span>
+</button>
+</header>
+<div class="mb-8 p-6 rounded-2xl glass-card relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons-round text-6xl text-primary">casino</span>
+</div>
+<div class="flex justify-between items-end relative z-10">
+<div>
+<p class="text-slate-300 text-sm font-medium mb-1">总局数</p>
+<p class="text-3xl font-bold text-white font-display">12</p>
+</div>
+<div class="text-right">
+<p class="text-slate-300 text-sm font-medium mb-1">游戏时长</p>
+<p class="text-xl font-bold text-primary font-display">45:20</p>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto pb-24 scrollbar-hide space-y-4">
+<div class="flex items-center justify-between px-2 mb-2">
+<h2 class="text-sm font-bold text-white/50 uppercase tracking-widest">排行榜</h2>
+<span class="text-xs text-white/30">上次更新：2分钟前</span>
+</div>
+<div class="group relative">
+<div class="absolute -top-3 -left-2 z-20 bg-primary rounded-full p-1.5 shadow-lg shadow-primary/30 rotate-[-15deg]">
+<span class="material-icons-round text-background-dark text-sm leading-none block">emoji_events</span>
+</div>
+<div class="flex items-center p-4 rounded-full glass-card border-primary/30 transition-all active:scale-[0.98]">
+<div class="relative">
+<img alt="Wang Wei Avatar" class="w-14 h-14 rounded-full border-2 border-primary object-cover" data-alt="Avatar of a smiling young man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDg7Jc9-zNgJ69SOV2dr8stWeToE0DWOkJs6UzKTypfmHz78dT56K1cHbpSYxaVCceGdv3x3DpaEIlFbo6LR_Y0FFD2W60HlJB6FST1YDqZHxG548Bp2DsaUOfqDE5TRaCGS2UFdKMUMBOIOJn29HoJ34_PAjFfgXQIYD66Xvr2OxdOAO0exWXHRs39HPYuf7x58XDOXeBwJY-BqDg6RxWiyRAFFF6DNWDyo-rKmXbojg_dwmoDO-gNDMbjUFk9FDAxurT833MGixk"/>
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-background-dark"></div>
+</div>
+<div class="ml-4 flex-1">
+<h3 class="font-bold text-lg text-white">王伟</h3>
+<div class="flex items-center text-xs text-primary/80 font-medium">
+<span class="material-icons-round text-[14px] mr-1">trending_up</span>
+                            连胜中
+                        </div>
+</div>
+<div class="text-right">
+<span class="block text-2xl font-extrabold text-primary text-glow font-display">+1,280</span>
+</div>
+</div>
+</div>
+<div class="group relative">
+<div class="absolute -top-2 -left-1 z-20 bg-slate-600 rounded-full w-6 h-6 flex items-center justify-center shadow-lg border border-white/10">
+<span class="text-xs font-bold text-white leading-none font-display">2</span>
+</div>
+<div class="flex items-center p-4 rounded-full glass-card transition-all active:scale-[0.98]">
+<div class="relative">
+<img alt="Li Na Avatar" class="w-12 h-12 rounded-full border border-white/10 object-cover opacity-90" data-alt="Avatar of a woman looking sideways" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrAcR7ZxmmyvxcITBosdPBXJXl7_F8UhaNKvYCea4W6GBlQvwckDc5oB7fv6LCsR32ZNvKVtLhLrODbOQ6YWeCPbzABXqrZ6xQoIW9omBz1tZ3cCQFC85-3KkzMTwozyuYqkMJ6esM-QlmCdv5iFmJXa-yjecT2dSf0Lt5wKNyht53baVzm2yR2SKD24pJdFqWzTzNSEJmDWH2kMFROWzLmItlfB7MQiyGTn6F3SyyUfmc4AjRX80NHN5KP_kqHz-rI54Tpul0n4U"/>
+</div>
+<div class="ml-4 flex-1">
+<h3 class="font-bold text-lg text-slate-200">李娜</h3>
+</div>
+<div class="text-right">
+<span class="block text-xl font-bold text-primary/80 font-display">+320</span>
+</div>
+</div>
+</div>
+<div class="group relative">
+<div class="absolute -top-2 -left-1 z-20 bg-[#a06848] rounded-full w-6 h-6 flex items-center justify-center shadow-lg border border-white/10">
+<span class="text-xs font-bold text-white leading-none font-display">3</span>
+</div>
+<div class="flex items-center p-4 rounded-full glass-card transition-all active:scale-[0.98]">
+<div class="relative">
+<img alt="Chen Bo Avatar" class="w-12 h-12 rounded-full border border-white/10 object-cover grayscale opacity-70" data-alt="Avatar of a man with glasses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_EQh8dFQ3npDWEdE7WCnuufPrBwxR1X-tpKnaRfC0NFzaeglX8mLiRkMWseuCW5kE1OobaFVruyW_TCVCFu3GlO-yLy5LsWfpXxFif_h4m3_7Ym7lX8rzKWFagiJWxtC1gmNXQdbpHR5_1K8JYY82VedGms6W3QPvvvb_cHK4keXLmp0cJBR32FNmgL9KOZ0ANA0pdR-pWF-qVAOpA_2qcgFWX9KInwiQyDFEM5VgFeOThjfJErtBw4qO7NcTJ4-P-wY0XGjALpE"/>
+</div>
+<div class="ml-4 flex-1">
+<h3 class="font-bold text-lg text-slate-400">陈博</h3>
+</div>
+<div class="text-right">
+<span class="block text-xl font-bold text-slate-400 font-display">-50</span>
+</div>
+</div>
+</div>
+<div class="group relative">
+<div class="absolute -top-2 -left-1 z-20 bg-slate-800 rounded-full w-6 h-6 flex items-center justify-center shadow-lg border border-white/10">
+<span class="text-xs font-bold text-white/50 leading-none font-display">4</span>
+</div>
+<div class="flex items-center p-4 rounded-full glass-card transition-all active:scale-[0.98]">
+<div class="relative">
+<img alt="Zhang Wei Avatar" class="w-12 h-12 rounded-full border border-white/10 object-cover grayscale opacity-70" data-alt="Avatar of a man with a beard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHL_vevNF1oVAY8QvjYDUksmYgOtIuFAASnF-MXjbSxl-p-uw8kYfR6sTKdsrk1nJnF0e1jvOyE2MDlpTUJmGl4qJspDzauAQpOOIUhd-B5PP6UccAvkjXuNkP1DF1KpLrPO4lN-VSl-Ooi8GAswXMJlDEX9vZtmvINgtLuMv8Zlac2qran0bBn9XmlhrSuqT1U6LIf07UoAdgs_Uuo_KqFuNh_NIjpTMScsSEEWzA1g0U7dREpEZ_1W3FBzjoBN1Qgf871KM33gY"/>
+</div>
+<div class="ml-4 flex-1">
+<h3 class="font-bold text-lg text-slate-400">张伟</h3>
+</div>
+<div class="text-right">
+<span class="block text-xl font-bold text-slate-500 font-display">-1,550</span>
+</div>
+</div>
+</div>
+<div class="h-20"></div>
+</div>
+<div class="fixed bottom-8 left-0 right-0 flex justify-center px-6 z-50 pointer-events-none">
+<div class="w-full max-w-md flex justify-end pointer-events-auto">
+<button class="gold-texture text-background-dark font-bold py-4 px-8 rounded-full shadow-2xl shadow-primary/30 flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-all duration-200">
+<span class="material-icons-round text-2xl">add</span>
+<span class="text-lg tracking-tight">记分</span>
+</button>
+</div>
+</div>
+<div class="fixed bottom-0 left-0 right-0 bg-background-dark/90 backdrop-blur-md border-t border-white/5 pb-safe-bottom pt-2 px-6 z-40">
+<div class="max-w-md mx-auto flex justify-between items-center text-xs font-medium text-slate-400">
+<button class="flex flex-col items-center p-2 text-primary">
+<span class="material-icons-round text-2xl mb-1">dashboard</span>
+<span>概览</span>
+</button>
+<button class="flex flex-col items-center p-2 hover:text-white transition-colors">
+<span class="material-icons-round text-2xl mb-1">history</span>
+<span>历史</span>
+</button>
+<button class="flex flex-col items-center p-2 hover:text-white transition-colors">
+<span class="material-icons-round text-2xl mb-1">people</span>
+<span>玩家</span>
+</button>
+<button class="flex flex-col items-center p-2 hover:text-white transition-colors">
+<span class="material-icons-round text-2xl mb-1">leaderboard</span>
+<span>统计</span>
+</button>
+</div>
+</div>
+</div>
+<div class="fixed inset-0 pointer-events-none opacity-[0.02] z-0" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+</body></html>

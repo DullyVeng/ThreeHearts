@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Match History Records</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FFD700", // Gold
+                        "primary-dark": "#B8860B", // Dark Gold
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#8B0000", // Dark Red base
+                        "crimson-dark": "#5e0000",
+                        "crimson-light": "#a30000",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Sans SC", "sans-serif"],
+                        "sans": ["Noto Sans SC", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                    boxShadow: {
+                        'glow': '0 0 15px rgba(255, 215, 0, 0.5)',
+                        'gold-border': 'inset 0 0 0 1px rgba(255, 215, 0, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+        }
+        .bg-festive {
+            background: linear-gradient(180deg, #8B0000 0%, #5e0000 100%);
+        }
+        .glass-panel {
+            background: rgba(94, 0, 0, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(255, 215, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 215, 0, 0.3);box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        .glass-card:active {
+            transform: scale(0.98);
+            border-color: rgba(255, 215, 0, 0.6);
+            background: linear-gradient(145deg, rgba(255, 215, 0, 0.05) 0%, rgba(139, 0, 0, 0.4) 100%);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+        }
+        .text-glow-silver {
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+        .bg-pattern {
+            background-image: radial-gradient(circle at 2px 2px, rgba(255, 215, 0, 0.15) 1px, transparent 0);
+            background-size: 32px 32px;
+        }
+        .badge-win {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #5e0000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .badge-loss {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #E5E5E5;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-festive font-display text-gray-100 antialiased overflow-hidden h-screen w-full flex justify-center">
+<div class="w-full max-w-md h-full flex flex-col relative bg-pattern">
+<header class="pt-12 pb-4 px-6 z-20 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div>
+<h1 class="text-4xl font-extrabold text-primary tracking-tight text-glow" style="font-family: 'Times New Roman', serif;">红桃三</h1>
+<p class="text-sm text-primary/70 font-medium tracking-widest uppercase mt-1">HONG TAO SAN</p>
+</div>
+<button class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-primary/30 text-primary">
+<span class="material-icons text-xl">tune</span>
+</button>
+</div>
+<div class="flex items-end justify-between mt-2">
+<h2 class="text-2xl font-bold text-white">历史记录</h2>
+<div class="text-xs font-semibold px-3 py-1 bg-primary/10 text-primary rounded-full border border-primary/30">
+                    总对局: 42
+                </div>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto px-6 pb-24 space-y-4 z-10" id="scroll-container">
+<div class="flex items-center gap-4 py-2">
+<span class="text-xs font-bold text-primary/80 uppercase tracking-wider">2024年 2月</span>
+<div class="h-[1px] flex-1 bg-gradient-to-r from-primary/30 to-transparent"></div>
+</div>
+<div class="glass-card rounded-2xl p-4 relative overflow-hidden group">
+<div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/20 blur-3xl rounded-full"></div>
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-2">
+<span class="badge-win text-xs font-bold px-2 py-0.5 rounded">胜</span>
+<span class="text-gray-300 text-xs font-medium">2月10日 • 20:30</span>
+</div>
+<span class="material-icons text-primary/60 text-sm">more_horiz</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="absolute inset-0 rounded-full border-2 border-primary shadow-glow"></div>
+<img alt="Avatar of Uncle Wang" class="w-12 h-12 rounded-full object-cover border-2 border-crimson-dark" data-alt="Close up portrait of a smiling man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdBg-LLGrk7rRVSA6ut6Vkm7GNNwl09lc8rlReqZ80lJxPRENwf3eiPZnqjxUe7LkeKrX3c524aNZGvPfcnEADBmud3W20INpUubcgNMKuW-XgyNPnDdcr7g7l2SQ-8gE0JZr2ZrrBPTYenXvilQRNpjE4RG5U6cV4mpI9qknvpfE3gDOUHmg1RvXCaSCv1eox4egSMMEyQhMmAULOvqeKeeR5gZ4TfPOnpJ_6kVMavm5BlsJeLlks_wzsjWoCcZa65KyMclKVVLw"/>
+<div class="absolute -bottom-1 -right-1 badge-win rounded-full p-[2px]">
+<span class="material-icons text-[10px] block text-crimson-dark">emoji_events</span>
+</div>
+</div>
+<div>
+<p class="text-sm font-bold text-white">王叔叔</p>
+<p class="text-xs text-primary/80">大赢家</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-3xl font-extrabold text-primary text-glow">+860</p>
+<p class="text-[10px] text-gray-400 uppercase tracking-wide">得分</p>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center">
+<div class="flex -space-x-2">
+<img alt="Player 2 Avatar" class="w-6 h-6 rounded-full border border-crimson-dark grayscale opacity-70" data-alt="Portrait of a smiling woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKL8gL38HT4xFyvomvjXhKhbvovqVrpHA2OpUAkE02mo4F97m-dURESVmfgG0UQqkOfXjKjgDmt13zMrMAlNF_nJdg2yzJwlUQOxek_Mvt093fMOC0Cx8ys0p-kadmkEos4KiLS5JsNO3HjKHJSXdQwFCqxKh4rTYutZhHufXacnCl31MnWHjv60d0kRJ6w6dtBaq5F3PaUuw8p425xSCW2G-YEWpD3YXlyPXsexnZWPoklteE1IHE7bco-PAJ7n0sSreXXwLlKHM"/>
+<img alt="Player 3 Avatar" class="w-6 h-6 rounded-full border border-crimson-dark grayscale opacity-70" data-alt="Portrait of a man with glasses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_lbIr7lonsVQRMYl3TdcyWOAJX0k8YVirzUJW1tULVrmqKX8aS_4ha0r8gBaGzCUHWVPcXWpxpouybuFdEAoDIqliOaFeAbnZBwEBBIQP3YcGNBO8gX0ftcbY20X5fQ9NutGLDkw-k1AIUz_vcPDc7VhepBnX6PLzAsrd6Ns1sG37zYfLZtyZETPOGTS62Qe0D_9KaLyApkDxaKBjisAUgDFdh7CVWZVgLXrrAvcHmxAZxzVPq8u4qgkHS6F1zSlFZyFrm0YAtjU"/>
+<div class="w-6 h-6 rounded-full border border-crimson-dark bg-white/10 flex items-center justify-center text-[10px] text-gray-400 font-medium">+1</div>
+</div>
+<span class="text-[10px] text-gray-400 font-medium">12 局 • 经典模式</span>
+</div>
+</div>
+<div class="glass-card rounded-2xl p-4 relative overflow-hidden">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-2">
+<span class="badge-loss text-xs font-bold px-2 py-0.5 rounded">负</span>
+<span class="text-gray-400 text-xs font-medium">2月09日 • 14:15</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="absolute inset-0 rounded-full border border-white/20"></div>
+<img alt="Avatar of Self" class="w-12 h-12 rounded-full object-cover border-2 border-crimson-dark opacity-80" data-alt="Portrait of a serious man looking forward" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOLuXj6lFZbzDSXrtQx8aOEYw4TtIoQbKSaZgKDDkLZ8OXsvg5JimhKXEw9ml4NrIOrPeTw6sZKX2C837zwc9O5CE4f44UI9gDfTPu6hnCqmtZVkqPFFt-23qlwTDNQIiWq6K6LDTXlwhVQPkePD5FD5_pmfkKWcabSMCf8wBlS7px-Y62u92Ed_8bt7oiOYv7DmNF5YWqYchwGqSO6_4K4KED9pxU2EM80yBTuGYK-YadjFlR2zO0m9pCFGsDzw5wwEK_6_n9zGo"/>
+</div>
+<div>
+<p class="text-sm font-bold text-gray-300">我</p>
+<p class="text-xs text-gray-500">第二名</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-3xl font-extrabold text-gray-300 text-glow-silver">-120</p>
+<p class="text-[10px] text-gray-500 uppercase tracking-wide">得分</p>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center">
+<div class="flex -space-x-2">
+<img alt="Winner Avatar" class="w-6 h-6 rounded-full border border-crimson-dark ring-1 ring-primary" data-alt="Portrait of Uncle Wang" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7HcBczziDI96m_ED5Jl5NUbB0YO5agfpHKahLqyMNa1kA87adSmdz72xaahZ9Sp51ufNkhNeJMvZXavB6twAo2DaVNFx6JLEaa0SQUoFg-8bH0XoBA-ibSRUVxGs2DR44oYysTseHelfHkNppXLjIrSv_N75X24b-L344JDphxBerHVdsxIRRciinpDIInNf06ilSek0-Ld2BDQgwObsuaFuhDNDuMo58BSRnwOznuK-kQhzZDmzItuEUnI2ppG3Qrnd3WG8JARY"/>
+<img alt="Player 3 Avatar" class="w-6 h-6 rounded-full border border-crimson-dark grayscale opacity-70" data-alt="Portrait of a woman smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSDjYjMYcI9Mk3pVkh9ot_zi8wZYM6Dh4B6wr3Yvbk0peAiPd8EChxXN0Te3y0wrOL79H7yc_bhPbGNUXiKUixEjgLWrptKbay4VFyMxIgTpRrwlEacb7vk5EkodoBGmz-N0tbkg3inMIJ5o_vS4moSF2fcFdyn0MayhIJ5oozYSPYPrTGiaKJ0cqkBtyyvpVNyVQXC-Z9Cif6CotIA1a9eJ6FznenbopLJgtkvpFwxAIZ4_9A5s5KgRW2juMorDtI3FDBAy9Zx84"/>
+<div class="w-6 h-6 rounded-full border border-crimson-dark bg-white/10 flex items-center justify-center text-[10px] text-gray-400 font-medium">+1</div>
+</div>
+<span class="text-[10px] text-gray-400 font-medium">8 局 • 快速场</span>
+</div>
+</div>
+<div class="flex items-center gap-4 py-2 mt-2">
+<span class="text-xs font-bold text-primary/80 uppercase tracking-wider">2024年 1月</span>
+<div class="h-[1px] flex-1 bg-gradient-to-r from-primary/30 to-transparent"></div>
+</div>
+<div class="glass-card rounded-2xl p-4 relative overflow-hidden group">
+<div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/10 blur-3xl rounded-full"></div>
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-2">
+<span class="badge-win text-xs font-bold px-2 py-0.5 rounded">胜</span>
+<span class="text-gray-300 text-xs font-medium">1月24日 • 22:00</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="absolute inset-0 rounded-full border-2 border-primary shadow-glow"></div>
+<img alt="Avatar of Auntie Li" class="w-12 h-12 rounded-full object-cover border-2 border-crimson-dark" data-alt="Portrait of a happy woman outdoors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZowfyPpFTMpyWrUyLE4oXLtcOgtXqaOzX4hiKs_Uz-PovNUaYm8u7oHQFwOiR66L0zol3TPbF8Cw4Qf9rmf2g_f8rw0HfsyAztp2QOQT_pSS4Xlj3kR2seypaU6krZ-oVq3yizyV86EqjW5VxCMKQN_E1MDB6iiO2_LyVSZkpOa4QD3nYvcFjDhi3TEXtDKEM8JKPe8qV-9T2ZI20m0EnZrd8SaMA0Fs__TNxvmP5I4-VQBNnmjOUa1PWvDIvVSoDfGlke-NA7Jk"/>
+<div class="absolute -bottom-1 -right-1 badge-win rounded-full p-[2px]">
+<span class="material-icons text-[10px] block text-crimson-dark">emoji_events</span>
+</div>
+</div>
+<div>
+<p class="text-sm font-bold text-white">李阿姨</p>
+<p class="text-xs text-primary/80">大赢家</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-3xl font-extrabold text-primary text-glow">+1200</p>
+<p class="text-[10px] text-gray-400 uppercase tracking-wide">得分</p>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center">
+<div class="flex -space-x-2">
+<img alt="Player 2 Avatar" class="w-6 h-6 rounded-full border border-crimson-dark grayscale opacity-70" data-alt="Portrait of a smiling man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIClFv0CtDfJVxav1IcpgQdMHw2qKLz6d4KKwngGUjgu9EP5rGar4SqUheg4GVPDa9avRxCN7YWbkh0WvjPV4x8CpkotVIKa-G8iYrT0vIE5oHBbBNIufTQJeW3OCM-7fyPsPTUK495hP0XYK23MGzBjzbA0D3TL3eAxBLLudR2NDKCxelsv2iNb_s2Vc3vtqGOzAOuQA7vtSJgbvLNnc7rQhAX_7xSLO-5QF3FS6DTU-rCSqg6pgwEXGun9HVnd72I2OBHu2RFwc"/>
+<img alt="Player 3 Avatar" class="w-6 h-6 rounded-full border border-crimson-dark grayscale opacity-70" data-alt="Avatar character graphic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcybi5rfTXwaLq1j5gG0_q9dCpblgqq_IDoJK07LvO03Q28qvpD_qu_sjPXi6aXTWO0qD4pgkrkgC9mkplbiw94hERHM-AY49bvToK6GOikJHqEkeGhsLf_Lq3rDN10IUXfUyQYziqnGEY6VYgDcaEWhNt9dQ0dz0LDHkpU76JLRyjhNCkpgTIMLtXQBMb8dc_He4mVQIzHyoyz9XHrsHhuC9Q7KAkQjq1GficTlWu4wkhW26SK1W2X0eRxF_1Ry7fj_AU4a3kyyQ"/>
+<div class="w-6 h-6 rounded-full border border-crimson-dark bg-white/10 flex items-center justify-center text-[10px] text-gray-400 font-medium">+1</div>
+</div>
+<span class="text-[10px] text-gray-400 font-medium">16 局 • 春节特辑</span>
+</div>
+</div>
+<div class="flex justify-center py-4 opacity-50">
+<div class="w-1 h-1 bg-primary rounded-full mx-1 animate-bounce" style="animation-delay: 0s"></div>
+<div class="w-1 h-1 bg-primary rounded-full mx-1 animate-bounce" style="animation-delay: 0.1s"></div>
+<div class="w-1 h-1 bg-primary rounded-full mx-1 animate-bounce" style="animation-delay: 0.2s"></div>
+</div>
+</main>
+<nav class="absolute bottom-6 left-6 right-6 h-16 glass-panel rounded-2xl flex items-center justify-around z-30 shadow-2xl">
+<button class="flex flex-col items-center justify-center w-12 h-12 rounded-xl text-primary/40 hover:text-primary transition-colors">
+<span class="material-icons text-2xl">style</span>
+<span class="text-[9px] font-bold mt-1">游戏</span>
+</button>
+<div class="relative -top-6">
+<button class="flex flex-col items-center justify-center w-14 h-14 bg-gradient-to-br from-primary to-primary-dark text-crimson-dark rounded-full shadow-glow transform transition hover:scale-105 active:scale-95 border-4 border-crimson-dark">
+<span class="material-icons text-2xl">history</span>
+</button>
+<div class="absolute -bottom-5 w-full text-center">
+<span class="text-[9px] font-bold text-primary">记录</span>
+</div>
+</div>
+<button class="flex flex-col items-center justify-center w-12 h-12 rounded-xl text-primary/40 hover:text-primary transition-colors">
+<span class="material-icons text-2xl">settings</span>
+<span class="text-[9px] font-bold mt-1">设置</span>
+</button>
+</nav>
+<div class="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none z-0"></div>
+<div class="absolute bottom-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none z-0"></div>
+</div>
+
+</body></html>

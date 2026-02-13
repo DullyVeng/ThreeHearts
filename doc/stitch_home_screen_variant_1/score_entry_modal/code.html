@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Score Entry Modal - Chinese New Year Card Game</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4c025",
+                        "primary-dark": "#cca01e",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221e10",
+                        "surface-dark": "#2c281b",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "Noto Sans SC", "sans-serif"],
+                        "sans": ["Plus Jakarta Sans", "Noto Sans SC", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                    backgroundImage: {
+                        'festive-pattern': "radial-gradient(circle at 50% 0%, rgba(244, 192, 37, 0.15) 0%, transparent 50%), radial-gradient(circle at 100% 100%, rgba(244, 192, 37, 0.05) 0%, transparent 40%)"
+                    }
+                },
+            },
+        }
+    </script>
+<style>.scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }.glass-panel {
+            background: rgba(44, 40, 27, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(244, 192, 37, 0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-900 dark:text-white antialiased h-screen overflow-hidden flex flex-col items-center justify-center relative">
+<div class="absolute inset-0 w-full h-full opacity-30 pointer-events-none overflow-hidden filter blur-sm bg-cover bg-center" data-alt="Abstract blurry mahjong table background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB4CYez73hT0bOVvWb5_b8miqlknMe5wZMlGQgVSXayYhmfOoyni9DlA-Ko7OLQSif8cexuVRLVTBKFLR7AKt0IybOsUwfV7GgEe8ohrnGXXv1EmjKwonhnMsFD0N7FkXje7pgLDRBfP9ncDZVQB5h2-40zXpZvHBoxSKkwSo5IMfqsYnOnqbmwSICjwwqp7MHZA8iGpivITLvKbVeocWTq8sOu4YukThftgSuju38plsoaRh63zIepjVHzrwSkUYyxDdQcuCmRFb8');"></div>
+<div class="absolute inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-sm">
+<div class="relative w-full max-w-md bg-surface-dark dark:bg-surface-dark rounded-t-xl sm:rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-60"></div>
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+<div class="relative z-10 px-6 pt-6 pb-4 flex justify-between items-center border-b border-white/5">
+<div>
+<h2 class="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+<span class="material-icons text-primary">emoji_events</span>
+                        本局得分
+                    </h2>
+<p class="text-xs text-gray-400 mt-1">第 8 局 • 麻将之夜</p>
+</div>
+<button class="p-2 rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
+<span class="material-icons">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto scrollbar-hide p-6 space-y-6 bg-festive-pattern">
+<div class="group relative bg-white/5 rounded-lg p-4 border border-primary/30 shadow-[0_0_15px_-5px_rgba(244,192,37,0.3)] transition-all">
+<div class="absolute -top-3 -right-3">
+<span class="bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded-full shadow-lg flex items-center gap-1">
+<span class="material-icons text-[14px]">star</span> 大赢家
+                         </span>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="Asian woman smiling avatar" class="w-14 h-14 rounded-full border-2 border-primary object-cover" data-alt="Portrait of a smiling woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfGN_k-M_EoeoV9TNnr9XGxDmdgAmjIavB7KiGJZ-NGGUpprK2OohVM2y7JRZvBqNzYET96OuMJRZzO1_dMIX4r5OIA13uHbcTAfFaZ8s3ijZqirHqt5LiQyPEVETsOufZsRe6Bn3SxZARqzSY6A-Dlahf-s3kxuu9r0PQNqaGYNUVPdOZDBgGJRtc1SfVQrYuVH7_UawQbLtXdmWRI838MUL-gI9RQYQYQ_Fdvz9896zJ-D12k6t5mXY4VDw0b4pJcCtkjCGtRqo"/>
+<div class="absolute -bottom-1 -right-1 bg-surface-dark rounded-full p-0.5">
+<span class="material-icons text-primary text-sm">local_fire_department</span>
+</div>
+</div>
+<div class="flex-1">
+<h3 class="text-lg font-bold text-white">吴奶奶</h3>
+<p class="text-xs text-primary">+120 总计</p>
+</div>
+<div class="flex items-center gap-3 bg-black/20 rounded-full p-1.5 border border-white/10">
+<button class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors active:scale-95">
+<span class="material-icons">remove</span>
+</button>
+<span class="font-display font-bold text-2xl text-primary w-12 text-center">+64</span>
+<button class="w-10 h-10 rounded-full bg-primary text-background-dark hover:bg-primary-dark flex items-center justify-center transition-colors active:scale-95 shadow-lg shadow-primary/20">
+<span class="material-icons">add</span>
+</button>
+</div>
+</div>
+</div>
+<div class="group bg-white/5 rounded-lg p-4 border border-white/5 hover:border-white/10 transition-all">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="Asian man with glasses avatar" class="w-14 h-14 rounded-full border-2 border-gray-600 object-cover opacity-80" data-alt="Portrait of a man with glasses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDd8tj-WvBPNRRTX5Q4bQjFJKqT1FhJ5u9umF2O72C3ryF9hsB0Y3eHrPFasOklj5UGIC2DBu-zqfWFOo-W2jfAcqLXqRrhEj6JlnALKWqbj6hW-T2KrQLIBVgiSTKKY6TFoNX-wjezVwZ5AYe081V-S8gZJFNiVcHJ37oDSiA0XO96D4l_Gw_tIlHznTo9gz5xGD-2MrfMj5VfEoCPAQUvqVKcqrv91qMKhe6vEc5yCs-VSahsx00PKdIvjhml5BDEm7AXti23YqA"/>
+</div>
+<div class="flex-1">
+<h3 class="text-lg font-medium text-gray-200">陈叔叔</h3>
+<p class="text-xs text-gray-500">-45 总计</p>
+</div>
+<div class="flex items-center gap-3 bg-black/20 rounded-full p-1.5 border border-white/10">
+<button class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors active:scale-95">
+<span class="material-icons">remove</span>
+</button>
+<span class="font-display font-bold text-2xl text-gray-300 w-12 text-center">-16</span>
+<button class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors active:scale-95">
+<span class="material-icons">add</span>
+</button>
+</div>
+</div>
+</div>
+<div class="group bg-white/5 rounded-lg p-4 border border-white/5 hover:border-white/10 transition-all">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="Young woman avatar" class="w-14 h-14 rounded-full border-2 border-gray-600 object-cover opacity-80" data-alt="Portrait of a young woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdBfv1zPSbmWlVcBGt0cVjFzsh6lF4TYtv3I-LPTNWWhMs0bpfkuCREU36R4rULEZ9uM60g829xA5TlemTXvdE_BCvZl9bzSmPv0A2_YBUd6U3xQC19LRT1F21VglaUt4Tdwk97rYLnQG8N5O9IWf5LV_biPL_pRGuUdfVNW8DwWbgiAACzt4PcKFlsIcYDeeL1FpM485ExGTIatVCubPum6xbh2BibSQ0lv33eLZVDWt1EEkUFDWD5IvZIHbOtPuHqTANQ30Wl3c"/>
+</div>
+<div class="flex-1">
+<h3 class="text-lg font-medium text-gray-200">李表妹</h3>
+<p class="text-xs text-gray-500">-10 总计</p>
+</div>
+<div class="flex items-center gap-3 bg-black/20 rounded-full p-1.5 border border-white/10">
+<button class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors active:scale-95">
+<span class="material-icons">remove</span>
+</button>
+<span class="font-display font-bold text-2xl text-gray-300 w-12 text-center">-32</span>
+<button class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors active:scale-95">
+<span class="material-icons">add</span>
+</button>
+</div>
+</div>
+</div>
+<div class="group bg-white/5 rounded-lg p-4 border border-white/5 hover:border-white/10 transition-all">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="Man looking serious avatar" class="w-14 h-14 rounded-full border-2 border-gray-600 object-cover opacity-80" data-alt="Portrait of a serious man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeom4j7H85qBF3WJfOx8olqTpcf0p77am3aoh8Ba-yHaFa3dHl3Hm9_pNMVYDDnTB1G-V_fQOuas87tFWJeVbh0dB-QIZ_bwsTYbuFCCsnXAxB2OytqIu7Blrcoee4-Vox-y08dXS7CuP8VSFTT6ELSClqrzo2Tbtp0Q9f0ZAKov7PA9gYVYptBerjwvhS_S7tfTTPLjDfWrkbDm9rJUUeZ2DI4TeZKev8aiJGc1cqZvTql-UIJLPP_yZYPtPdcguV2OJf5Qo4n5A"/>
+</div>
+<div class="flex-1">
+<h3 class="text-lg font-medium text-gray-200">伟哥</h3>
+<p class="text-xs text-gray-500">-65 总计</p>
+</div>
+<div class="flex items-center gap-3 bg-black/20 rounded-full p-1.5 border border-white/10">
+<button class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors active:scale-95">
+<span class="material-icons">remove</span>
+</button>
+<span class="font-display font-bold text-2xl text-gray-300 w-12 text-center">-16</span>
+<button class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors active:scale-95">
+<span class="material-icons">add</span>
+</button>
+</div>
+</div>
+</div>
+<div class="bg-primary/5 rounded-lg p-3 border border-primary/10 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-icons text-primary/60 text-sm">balance</span>
+<span class="text-sm font-medium text-primary/80">分数校对</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs text-gray-400">合计:</span>
+<span class="text-lg font-bold text-green-400">0</span>
+<span class="material-icons text-green-400 text-sm">check_circle</span>
+</div>
+</div>
+</div>
+<div class="p-6 pt-4 bg-surface-dark/95 backdrop-blur border-t border-white/5 z-20">
+<button class="w-full bg-primary hover:bg-primary-dark text-background-dark font-display font-bold text-lg py-4 px-6 rounded-full shadow-[0_0_20px_rgba(244,192,37,0.4)] transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+<span class="material-icons">check_circle</span>
+                    确认录入
+                </button>
+<div class="text-center mt-3">
+<button class="text-gray-500 text-sm hover:text-gray-300 transition-colors">重置分数</button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

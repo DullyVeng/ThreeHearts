@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Room Settings Screen</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4252f",
+                        "background-light": "#f8f5f6",
+                        "background-dark": "#221011",
+                        "gold": "#FFD700",
+                        "gold-dark": "#FFA500",
+                    },
+                    fontFamily: {
+                        "display": ["PingFang SC", "Microsoft YaHei", "Plus Jakarta Sans", "system-ui", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                    backgroundImage: {
+                        'gold-gradient': 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>.glass-panel {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #FFD700, #FFA500);
+            cursor: pointer;
+            margin-top: -10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+        }.toggle-checkbox:checked {
+            right: 0;
+            border-color: #f4252f;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #f4252f;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white antialiased min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+<div class="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
+<div class="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-[100px]"></div>
+<div class="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-gold-dark/10 rounded-full blur-[80px]"></div>
+<div class="absolute inset-0 opacity-[0.03]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAa9aT5hhShy1aktGCdYCWqaOUSX4qvr9rZtA-XvMJ14P9GPxf4lXjXN0RD_fazS-ejmDJ2gJTtQzLIqXDSIkvWv0RUjUJ0RLIfTell9-Uc8Az3x7YsPSuhQynp3UxjC3aOOq9VIInWF3fTCNr_JteAagR5PQQtDjQGDZiePn3BtVBWmDQ6rGL1Py6BGcwNXvXYWM73Nla61_ESf9mPuXDRP8av6frAaGMUv7FALlR27cJYc6qIX4hNpePIA-FrIj_lPTPNOB90Zro');"></div>
+</div>
+<main class="relative z-10 w-full max-w-md h-screen flex flex-col p-6">
+<header class="flex items-center justify-between mb-8 pt-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full glass-panel active:scale-95 transition-transform text-white/90">
+<span class="material-icons-round">chevron_left</span>
+</button>
+<h1 class="text-xl font-bold tracking-wide text-white">房间设置</h1>
+<div class="w-10"></div> 
+</header>
+<div class="flex-1 overflow-y-auto no-scrollbar pb-24 space-y-6">
+<section class="glass-panel rounded-lg p-6 space-y-6">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-icons-round text-gold text-lg">casino</span>
+<h2 class="text-sm font-semibold text-white/80 uppercase tracking-wider">基础规则</h2>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<label class="text-base font-medium text-white">初始分数</label>
+<span class="text-primary font-bold">100</span>
+</div>
+<div class="grid grid-cols-3 gap-3">
+<button class="bg-primary text-white font-bold py-3 rounded-xl shadow-lg shadow-primary/30 border border-primary ring-1 ring-primary/50 relative overflow-hidden group">
+<div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+<span class="relative">100</span>
+</button>
+<button class="bg-white/5 hover:bg-white/10 text-white/70 font-medium py-3 rounded-xl border border-white/10 transition-colors">
+                            200
+                        </button>
+<button class="bg-white/5 hover:bg-white/10 text-white/70 font-medium py-3 rounded-xl border border-white/10 transition-colors">
+                            500
+                        </button>
+</div>
+</div>
+<div class="space-y-4 pt-2">
+<div class="flex justify-between items-end">
+<label class="text-base font-medium text-white">底分</label>
+<span class="text-2xl font-bold text-transparent bg-clip-text bg-gold-gradient">x2</span>
+</div>
+<div class="relative w-full h-6 flex items-center">
+<input class="relative z-10" max="10" min="1" type="range" value="2"/>
+</div>
+<div class="flex justify-between text-xs text-white/40 font-medium px-1">
+<span>x1</span>
+<span>x5</span>
+<span>x10</span>
+</div>
+</div>
+</section>
+<section class="glass-panel rounded-lg p-6 space-y-6">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-icons-round text-gold text-lg">lock</span>
+<h2 class="text-sm font-semibold text-white/80 uppercase tracking-wider">高级限制</h2>
+</div>
+<div class="flex items-center justify-between py-1">
+<div class="flex flex-col">
+<span class="text-base font-medium text-white">封顶分数</span>
+<span class="text-xs text-white/40">达到上限后分数不再增加</span>
+</div>
+<div class="relative inline-block w-12 h-7 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 border-transparent appearance-none cursor-pointer translate-x-1 top-1 transition-all duration-300 checked:translate-x-6 z-10" id="toggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-7 rounded-full bg-white/10 cursor-pointer border border-white/10 transition-colors duration-300 checked:bg-primary" for="toggle"></label>
+</div>
+</div>
+<div class="space-y-3 pt-2">
+<label class="text-base font-medium text-white">支付方式</label>
+<div class="flex flex-col gap-3">
+<label class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 cursor-pointer group hover:bg-white/10 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-5 h-5 rounded-full border-2 border-primary flex items-center justify-center">
+<div class="w-2.5 h-2.5 rounded-full bg-primary"></div>
+</div>
+<span class="text-white/90 font-medium">房主支付</span>
+</div>
+<span class="material-icons-round text-gold text-lg">diamond</span>
+</label>
+<label class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 cursor-pointer group hover:bg-white/10 transition-colors opacity-60">
+<div class="flex items-center gap-3">
+<div class="w-5 h-5 rounded-full border-2 border-white/30 flex items-center justify-center">
+</div>
+<span class="text-white/70 font-medium">AA 制</span>
+</div>
+</label>
+</div>
+</div>
+</section>
+</div>
+<div class="fixed bottom-0 left-0 w-full p-6 bg-gradient-to-t from-background-dark via-background-dark/95 to-transparent z-20 flex justify-center">
+<button class="w-full max-w-md bg-primary hover:bg-red-600 active:scale-[0.98] text-white text-lg font-bold py-4 rounded-full shadow-[0_8px_30px_rgb(244,37,47,0.4)] transition-all duration-300 flex items-center justify-center gap-2 group">
+<span>确认创建</span>
+<span class="material-icons-round group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</main>
+</body></html>

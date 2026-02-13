@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>红桃三 - 首页</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4252f",
+                        "primary-dark": "#b91c24",
+                        "background-light": "#f8f5f6",
+                        "background-dark": "#221011",
+                        "gold": {
+                            100: "#FFF9C4",
+                            300: "#FFF176",
+                            500: "#FFD700",
+                            700: "#FBC02D",
+                            900: "#F57F17",
+                        }
+                    },
+                    fontFamily: {
+                        "display": ["Noto Sans SC", "PingFang SC", "Microsoft YaHei", "sans-serif"],
+                        "chinese": ["Noto Serif SC", "serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                    backgroundImage: {
+                        'crimson-gradient': 'radial-gradient(circle at 50% 30%, #4a0d10 0%, #221011 100%)',
+                        'gold-gradient': 'linear-gradient(135deg, #FFF9C4 0%, #FFD700 50%, #F57F17 100%)',
+                        'glass': 'linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+                        'heart-gradient': 'linear-gradient(135deg, #ff4d4d 0%, #cc0000 50%, #990000 100%)',
+                    }
+                },
+            },
+        }
+    </script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&amp;family=Noto+Serif+SC:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>.coin-bg {
+            position: absolute;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.6;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+            pointer-events: none;
+        }
+        .gold-text-gradient {
+            background: linear-gradient(to bottom, #FFF9C4, #FFD700, #F57F17);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 4px 12px rgba(245, 127, 23, 0.3);
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .primary-gold-btn {
+            background: linear-gradient(135deg, #FFD700 0%, #FBC02D 50%, #F57F17 100%);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4), inset 0 2px 4px rgba(255,255,255,0.4);
+        }
+        .secondary-glass-btn {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }.heart-container {
+            position: relative;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+        }
+        .heart-shape {
+            fill: url(#heartGradient);
+            stroke: url(#goldStroke);
+            stroke-width: 2;
+            filter: drop-shadow(0px 4px 4px rgba(0,0,0,0.25));
+        }
+        .heart-facet-light {
+            fill: rgba(255, 255, 255, 0.2);
+            mix-blend-mode: overlay;
+        }
+        .heart-facet-shadow {
+            fill: rgba(50, 0, 0, 0.4);
+            mix-blend-mode: multiply;
+        }
+        .heart-shine {
+            fill: rgba(255, 255, 255, 0.6);
+            filter: blur(1px);
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark text-white font-display overflow-hidden h-screen w-full relative">
+<div class="absolute inset-0 bg-crimson-gradient z-0"></div>
+<div class="coin-bg w-48 h-48 rounded-full bg-gradient-to-br from-gold-300/30 to-gold-900/10 blur-xl top-[-20px] left-[-40px]"></div>
+<div class="absolute top-[20%] right-[-20px] w-24 h-24 z-0 opacity-80" data-alt="3D floating gold coin graphic">
+<div class="w-full h-full rounded-full bg-gradient-to-br from-gold-100 via-gold-500 to-gold-900 shadow-2xl flex items-center justify-center transform rotate-12">
+<div class="w-12 h-12 border-2 border-gold-900/50 rounded-sm transform rotate-45"></div>
+</div>
+</div>
+<div class="absolute bottom-[15%] left-[10%] w-32 h-32 z-0 opacity-40 blur-sm" data-alt="blurred floating gold coin graphic">
+<div class="w-full h-full rounded-full bg-gradient-to-br from-gold-300 via-gold-700 to-gold-900 shadow-2xl flex items-center justify-center transform -rotate-12">
+<div class="w-16 h-16 border-2 border-gold-900/50 rounded-sm transform rotate-45"></div>
+</div>
+</div>
+<div class="absolute bottom-0 right-0 w-full h-1/2 bg-gradient-to-t from-primary/20 to-transparent pointer-events-none"></div>
+<main class="relative z-10 h-full flex flex-col items-center justify-between px-6 py-12 safe-area-inset">
+<div class="flex flex-col items-center mt-12 space-y-4">
+<div class="w-28 h-28 relative flex items-center justify-center mb-6">
+<div class="absolute inset-0 bg-gold-500/10 blur-2xl rounded-full"></div>
+<svg class="w-full h-full heart-container transform hover:scale-105 transition-transform duration-500" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="heartGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1"></stop>
+<stop offset="50%" style="stop-color:#d40000;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#660000;stop-opacity:1"></stop>
+</linearGradient>
+<linearGradient id="goldStroke" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#FFF9C4"></stop>
+<stop offset="50%" style="stop-color:#FFD700"></stop>
+<stop offset="100%" style="stop-color:#F57F17"></stop>
+</linearGradient>
+<filter id="glow">
+<feGaussianBlur result="coloredBlur" stdDeviation="2.5"></feGaussianBlur>
+<feMerge>
+<feMergeNode in="coloredBlur"></feMergeNode>
+<feMergeNode in="SourceGraphic"></feMergeNode>
+</feMerge>
+</filter>
+</defs>
+<path class="heart-shape" d="M50 88 C50 88 12 65 12 35 C12 20 24 10 36 10 C44 10 48 15 50 20 C52 15 56 10 64 10 C76 10 88 20 88 35 C88 65 50 88 50 88 Z"></path>
+<path class="heart-facet-light" d="M50 35 L36 10 L12 35 L50 88 Z" opacity="0.3"></path>
+<path class="heart-facet-shadow" d="M50 35 L64 10 L88 35 L50 88 Z" opacity="0.4"></path>
+<path d="M50 20 L64 35 L50 55 L36 35 Z" fill="rgba(255,255,255,0.1)" stroke="rgba(255,215,0,0.3)" stroke-width="0.5"></path>
+<ellipse class="heart-shine" cx="30" cy="25" opacity="0.4" rx="8" ry="12" transform="rotate(-30 30 25)"></ellipse>
+<circle class="heart-shine" cx="70" cy="25" opacity="0.3" r="3"></circle>
+<path d="M50 88 L12 35" fill="none" opacity="0.5" stroke="url(#goldStroke)" stroke-width="0.5"></path>
+<path d="M50 88 L88 35" fill="none" opacity="0.5" stroke="url(#goldStroke)" stroke-width="0.5"></path>
+</svg>
+</div>
+<div class="text-center space-y-1">
+<h1 class="font-chinese font-black text-6xl tracking-wide gold-text-gradient drop-shadow-2xl">
+                红桃三
+            </h1>
+<p class="font-display text-sm font-medium text-gold-100/60 uppercase tracking-[0.2em] mt-3">
+                春节快乐 • 阖家团圆
+            </p>
+</div>
+</div>
+<div class="w-full max-w-sm flex flex-col space-y-5 mb-8">
+<button class="group relative w-full h-16 rounded-full primary-gold-btn flex items-center justify-center transition-all duration-300 transform active:scale-95 hover:brightness-110 shadow-[0_0_30px_rgba(255,215,0,0.2)]">
+<div class="absolute inset-0 rounded-full bg-white/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="material-icons-round text-background-dark mr-2 text-2xl">add_circle</span>
+<span class="font-display font-bold text-xl text-background-dark tracking-wider">创建房间</span>
+</button>
+<button class="w-full h-16 rounded-full secondary-glass-btn flex items-center justify-center transition-all duration-300 active:scale-95 hover:bg-white/10">
+<span class="material-icons-round text-gold-300 mr-2 text-2xl">login</span>
+<span class="font-display font-bold text-xl text-gold-100 tracking-wider">加入房间</span>
+</button>
+</div>
+<div class="w-full max-w-sm grid grid-cols-2 gap-4">
+<div class="glass-panel h-24 rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-transform active:scale-95 hover:bg-white/5">
+<span class="material-icons-round text-gold-300 mb-1 text-2xl">history</span>
+<span class="text-xs font-display text-white/70">历史记录</span>
+</div>
+<div class="glass-panel h-24 rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-transform active:scale-95 hover:bg-white/5">
+<span class="material-icons-round text-gold-300 mb-1 text-2xl">person</span>
+<span class="text-xs font-display text-white/70">个人中心</span>
+</div>
+</div>
+<div class="absolute bottom-4 text-center w-full">
+<p class="text-[10px] text-white/20 font-display">v1.2.0 • 财源广进</p>
+</div>
+</main>
+<div class="fixed inset-0 pointer-events-none opacity-[0.03] z-[5]" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');">
+</div>
+
+</body></html>
