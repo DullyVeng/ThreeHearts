@@ -224,12 +224,21 @@ export const useRoomStore = defineStore('room', () => {
             'postgres_changes',
             { event: 'INSERT', schema: 'public', table: 'rounds', filter: `room_id=eq.${roomId}` },
             async () => {
+                // 刷新轮次数据
                 const { data } = await supabase
                     .from('rounds')
                     .select('*')
                     .eq('room_id', roomId)
                     .order('round_number', { ascending: true })
                 rounds.value = data || []
+
+                // 同时刷新玩家分数（确保其他玩家能看到最新分数）
+                const { data: playerData } = await supabase
+                    .from('room_players')
+                    .select('*, profiles:player_id(nickname, avatar_url)')
+                    .eq('room_id', roomId)
+                    .order('seat_index', { ascending: true })
+                players.value = playerData || []
             }
         )
 
