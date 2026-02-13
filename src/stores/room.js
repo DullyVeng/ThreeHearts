@@ -140,6 +140,9 @@ export const useRoomStore = defineStore('room', () => {
             console.error('Join room error:', error)
             return false
         }
+
+        // 保存当前房间信息到本地，方便刷新后重连
+        localStorage.setItem('currentRoom', JSON.stringify({ id: roomId }))
         return true
     }
 
@@ -358,6 +361,8 @@ export const useRoomStore = defineStore('room', () => {
             event: 'game_control',
             payload: { action: 'end_game' },
         })
+
+        localStorage.removeItem('currentRoom')
     }
 
     // 玩家离开房间
@@ -372,6 +377,8 @@ export const useRoomStore = defineStore('room', () => {
             .delete()
             .eq('room_id', room.value.id)
             .eq('player_id', userId)
+
+        localStorage.removeItem('currentRoom')
     }
 
     // 房主踢人
@@ -407,6 +414,8 @@ export const useRoomStore = defineStore('room', () => {
         if (remainingActive.length === 0) {
             await endGame()
         }
+
+        localStorage.removeItem('currentRoom')
     }
 
     // 房主解散房间（踢掉所有人，关闭房间）
@@ -424,6 +433,8 @@ export const useRoomStore = defineStore('room', () => {
             .from('rooms')
             .update({ status: 'finished' })
             .eq('id', room.value.id)
+
+        localStorage.removeItem('currentRoom')
     }
 
     // 转交房主并退出
@@ -443,6 +454,8 @@ export const useRoomStore = defineStore('room', () => {
             .update({ is_active: false })
             .eq('room_id', room.value.id)
             .eq('player_id', authStore.userId)
+
+        localStorage.removeItem('currentRoom')
     }
 
     // 活跃玩家

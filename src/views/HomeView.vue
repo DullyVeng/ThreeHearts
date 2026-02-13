@@ -65,6 +65,25 @@
       </div>
     </div>
 
+    <!-- 恢复游戏卡片 -->
+    <div v-if="resumeRoom" class="w-full max-w-sm mb-6 animate-fade-in-up">
+      <div 
+        @click="handleResume"
+        class="glass-panel p-4 rounded-2xl flex items-center justify-between cursor-pointer border border-gold-500/30 hover:bg-gold-500/10 transition-colors"
+      >
+        <div class="flex items-center">
+          <div class="w-12 h-12 rounded-full bg-gold-500/20 flex items-center justify-center mr-4">
+            <span class="material-icons-round text-gold-500 text-2xl">sports_esports</span>
+          </div>
+          <div>
+            <p class="text-gold-500 font-bold text-lg">回到游戏</p>
+            <p class="text-white/40 text-xs">房间号 {{ resumeRoom.room_code }} · {{ resumeRoom.status === 'playing' ? '进行中' : '等待中' }}</p>
+          </div>
+        </div>
+        <span class="material-icons-round text-white/40">chevron_right</span>
+      </div>
+    </div>
+
     <!-- 按钮区域 -->
     <div class="w-full max-w-sm flex flex-col space-y-5 mb-8">
       <!-- 创建房间 -->
@@ -111,5 +130,60 @@
 </template>
 
 <script setup>
-// Home page — no special logic needed
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { supabase } from '../lib/supabase'
+
+const router = useRouter()
+const resumeRoom = ref(null)
+
+function handleResume() {
+  if (!resumeRoom.value) return
+  if (resumeRoom.value.status === 'playing') {
+    router.push(`/game/${resumeRoom.value.id}`)
+  } else {
+    router.push(`/lobby/${resumeRoom.value.id}`)
+  }
+}
+
+onMounted(async () => {
+  const saved = localStorage.getItem('currentRoom')
+  if (saved) {
+    try {
+      const { id } = JSON.parse(saved)
+      if (!id) return
+      
+      const { data, error } = await supabase
+        .from('rooms')
+        .select('id, room_code, status')
+        .eq('id', id)
+        .in('status', ['waiting', 'playing'])
+        .single()
+      
+      if (!error && data) {
+        resumeRoom.value = data
+      } else {
+        localStorage.removeItem('currentRoom')
+      }
+    } catch (e) {
+      localStorage.removeItem('currentRoom')
+    }
+  }
+})
 </script>
+
+<style scoped>
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out;
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
