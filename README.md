@@ -1,5 +1,84 @@
-# Vue 3 + Vite
+# ThreeHearts (三心计分器)
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 🎴 项目简介
+ThreeHearts 是一个精美的多人即时棋牌游戏计分工具，专为朋友聚会、桌面游戏设计。它摒弃了传统的纸笔记录方式，通过现代化的 Web 界面提供实时、同步、自动化的计分体验。
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+项目采用 **Vue 3** + **Supabase** 构建，支持实时数据同步，确保所有玩家终端上的分数毫秒级同步。
+
+## ✨ 核心特性
+
+### 🎮 房间与联机
+- **快速建房/加入**：一键生成 4 位数房间码，支持复制链接分享邀请，扫码即入。
+- **实时大厅**：玩家状态（准备/未准备）实时同步，房主可踢人，所有玩家就绪后方可开始游戏。
+- **断线重连**：网络波动或意外关闭页面，重新扫码即可无缝回到游戏现场。
+- **自动托管**：全员离开或游戏结束后，房间自动归档，防止无效占用。
+
+### 📊 智能计分
+- **实时同步**：任意玩家录入分数，全员屏幕瞬间更新，无需手动刷新。
+- **自动计算**：自动累计总分，支持每局复盘，提供本局分数与累计分数的清晰展示。
+- **游戏时长**：精确记录游戏持续时间，让每一场对局都有迹可循。
+- **趋势分析**：每局结束后显示玩家分数升降趋势（上局 +20 / -10）。
+
+### 🎨 极致体验
+- **精美 UI**：采用暗黑金奢华设计风格，玻璃拟态（Glassmorphism）卡片，流光金字特效。
+- **个性化**：内置 9 款精美国潮动物头像（猫、柴犬、熊猫等），支持自定义昵称。
+- **移动端适配**：专为手机屏幕优化，操作行云流水。
+
+## 🛠️ 技术栈
+
+### 前端
+- **框架**: Vue 3 (Script Setup)
+- **构建**: Vite
+- **路由**: Vue Router 4
+- **状态管理**: Pinia
+- **样式**: Tailwind CSS (Utility-first) + 自定义 CSS 动效
+
+### 后端 (BaaS)
+- **服务**: Supabase
+- **数据库**: PostgreSQL
+- **实时通信**: Supabase Realtime (WebSocket)
+- **认证**: Supabase Auth (匿名登录机制)
+
+## 🚀 快速开始
+
+### 1. 安装依赖
+```bash
+npm install
+```
+
+### 2. 环境变量配置
+在项目根目录创建 `.env` 文件，填入 Supabase 项目凭证：
+```ini
+VITE_SUPABASE_URL=your_project_url
+VITE_SUPABASE_ANON_KEY=your_anon_key
+```
+
+### 3. 表结构初始化
+在 Supabase SQL Editor 中执行以下建表语句：
+- `profiles`：玩家资料
+- `rooms`：房间信息
+- `room_players`：玩家与房间的关联
+- `rounds`：局数记录
+- `matches`：历史对局归档
+
+*(注：需确开启 Realtime 功能并配置 RLS 策略)*
+
+### 4. 启动开发服务器
+```bash
+npm run dev
+```
+
+### 5. 生产构建
+```bash
+npm run build
+```
+
+## 📱 页面概览
+- **首页**：创建房间 / 加入房间 / 历史记录 / 个人设置
+- **大厅**：玩家列表、准备状态、邀请功能
+- **计分板**：实时排名、录入分数、游戏菜单（转交房主、结束游戏）
+- **结算页**：最终排名、赢家展示、返回首页
+- **历史记录**：查看过往战绩及详细得分
+
+---
+*Created with ❤️ by Antigravity*
