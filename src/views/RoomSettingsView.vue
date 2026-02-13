@@ -18,20 +18,41 @@
       <!-- 初始分数 -->
       <div class="mb-6">
         <label class="text-white/60 text-sm mb-3 block">初始分数</label>
-        <div class="flex gap-3">
+        <div class="flex gap-3 mb-3">
           <button
-            v-for="score in [100, 200, 500]"
+            v-for="score in [0, 100, 200, 500]"
             :key="score"
-            @click="settings.initialScore = score"
+            @click="selectPresetScore(score)"
             :class="[
               'flex-1 h-11 rounded-lg font-bold text-sm transition-all',
-              settings.initialScore === score
+              settings.initialScore === score && !useCustomScore
                 ? 'primary-gold-btn text-bg-dark'
                 : 'glass-panel text-white/60 hover:text-white'
             ]"
           >
             {{ score }}
           </button>
+        </div>
+        <!-- 自定义输入 -->
+        <div class="flex items-center gap-3">
+          <span class="text-white/40 text-xs shrink-0">自定义</span>
+          <div :class="[
+            'flex-1 h-11 rounded-lg flex items-center px-3 transition-all',
+            useCustomScore
+              ? 'glass-card border-gold-500/50'
+              : 'glass-panel'
+          ]">
+            <input
+              v-model.number="customScoreInput"
+              type="number"
+              min="0"
+              step="1"
+              placeholder="输入分数"
+              @focus="useCustomScore = true"
+              @input="onCustomScoreInput"
+              class="w-full bg-transparent text-white text-sm font-bold outline-none placeholder-white/20"
+            />
+          </div>
         </div>
       </div>
 
@@ -131,6 +152,8 @@ import { useRoomStore } from '../stores/room'
 const router = useRouter()
 const roomStore = useRoomStore()
 const creating = ref(false)
+const useCustomScore = ref(false)
+const customScoreInput = ref('')
 
 const settings = reactive({
   initialScore: 100,
@@ -138,6 +161,18 @@ const settings = reactive({
   scoreCap: false,
   paymentMode: 'host',
 })
+
+function selectPresetScore(score) {
+  useCustomScore.value = false
+  customScoreInput.value = ''
+  settings.initialScore = score
+}
+
+function onCustomScoreInput() {
+  useCustomScore.value = true
+  const val = Number(customScoreInput.value)
+  settings.initialScore = isNaN(val) || val < 0 ? 0 : val
+}
 
 async function handleCreate() {
   creating.value = true

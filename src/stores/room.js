@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { supabase } from '../lib/supabase'
+import { useAuthStore } from './auth'
 
 export const useRoomStore = defineStore('room', () => {
     const room = ref(null)
@@ -11,8 +12,8 @@ export const useRoomStore = defineStore('room', () => {
 
     const roomCode = computed(() => room.value?.room_code)
     const isHost = computed(() => {
-        const userId = supabase.auth.getUser()?.data?.user?.id
-        return room.value?.host_id === userId
+        const authStore = useAuthStore()
+        return room.value?.host_id === authStore.userId
     })
     const currentRound = computed(() => rounds.value.length)
     const sortedPlayers = computed(() => {
@@ -66,7 +67,7 @@ export const useRoomStore = defineStore('room', () => {
             .from('rooms')
             .select('*')
             .eq('room_code', code)
-            .eq('status', 'waiting')
+            .in('status', ['waiting', 'playing'])
             .single()
 
         if (error) {
@@ -79,6 +80,38 @@ export const useRoomStore = defineStore('room', () => {
     // 加入房间
     async function joinRoom(roomId) {
         const { data: { user } } = await supabase.auth.getUser()
+
+        // 先检查是否已有记录（可能之前退出过）
+        const { data: existing } = await supabase
+            .from('room_players')
+            .select('id, is_active')
+            .eq('room_id', roomId)
+            .eq('player_id', user.id)
+            .maybeSingle()
+
+        if (existing) {
+            if (!existing.is_active) {
+                // 重新激活，继承之前的分数
+                await supabase
+                    .from('room_players')
+                    .update({ is_active: true })
+                    .eq('id', existing.id)
+            }
+            return true
+        }
+
+        // 获取房间的 initial_score
+        let initialScore = 0
+        if (room.value?.initial_score != null) {
+            initialScore = room.value.initial_score
+        } else {
+            const { data: roomData } = await supabase
+                .from('rooms')
+                .select('initial_score')
+                .eq('id', roomId)
+                .single()
+            initialScore = roomData?.initial_score || 0
+        }
 
         // 先获取当前房间人数确定座位号
         const { data: existingPlayers } = await supabase
@@ -96,7 +129,7 @@ export const useRoomStore = defineStore('room', () => {
             .insert({
                 room_id: roomId,
                 player_id: user.id,
-                current_score: 0,
+                current_score: initialScore,
                 is_ready: false,
                 seat_index: seatIndex,
             })
@@ -152,6 +185,12 @@ export const useRoomStore = defineStore('room', () => {
 
     // 订阅实时更新
     function subscribeToRoom(roomId) {
+        // 防止重复订阅同一房间
+        if (channel.value) {
+            supabase.removeChannel(channel.value)
+            channel.value = null
+        }
+
         channel.value = supabase.channel(`room:${roomId}`)
 
         // 监听玩家变动
@@ -200,7 +239,25 @@ export const useRoomStore = defineStore('room', () => {
             }
         })
 
-        channel.value.subscribe()
+        channel.value.subscribe(async (status) => {
+            console.log(`Realtime channel status: ${status}`)
+            if (status === 'SUBSCRIBED') {
+                // 连接成功后立即刷新一次数据，防止遗漏
+                const { data: playerData } = await supabase
+                    .from('room_players')
+                    .select('*, profiles:player_id(nickname, avatar_url)')
+                    .eq('room_id', roomId)
+                    .order('seat_index', { ascending: true })
+                players.value = playerData || []
+
+                const { data: roomData } = await supabase
+                    .from('rooms')
+                    .select('*')
+                    .eq('id', roomId)
+                    .single()
+                if (roomData) room.value = roomData
+            }
+        })
     }
 
     // 取消订阅
@@ -215,10 +272,13 @@ export const useRoomStore = defineStore('room', () => {
     async function startGame() {
         if (!room.value) return
 
-        await supabase
+        const { data: updatedRoom } = await supabase
             .from('rooms')
-            .update({ status: 'playing' })
+            .update({ status: 'playing', started_at: new Date().toISOString() })
             .eq('id', room.value.id)
+            .select()
+            .single()
+        if (updatedRoom) room.value = updatedRoom
 
         channel.value?.send({
             type: 'broadcast',
@@ -260,6 +320,14 @@ export const useRoomStore = defineStore('room', () => {
             }
         }
 
+        // 刷新本地玩家数据以同步最新分数
+        const { data: freshPlayers } = await supabase
+            .from('room_players')
+            .select('*, profiles:player_id(nickname, avatar_url)')
+            .eq('room_id', room.value.id)
+            .order('seat_index', { ascending: true })
+        players.value = freshPlayers || []
+
         return true
     }
 
@@ -292,6 +360,94 @@ export const useRoomStore = defineStore('room', () => {
         })
     }
 
+    // 玩家离开房间
+    async function leaveRoom() {
+        if (!room.value) return
+        const authStore = useAuthStore()
+        const userId = authStore.userId
+        if (!userId) return
+
+        await supabase
+            .from('room_players')
+            .delete()
+            .eq('room_id', room.value.id)
+            .eq('player_id', userId)
+    }
+
+    // 房主踢人
+    async function kickPlayer(playerId) {
+        if (!room.value) return
+        const { error } = await supabase
+            .from('room_players')
+            .delete()
+            .eq('room_id', room.value.id)
+            .eq('player_id', playerId)
+
+        if (error) {
+            console.error('Kick player error:', error)
+        }
+    }
+
+    // 游戏中退出（标记不活跃，保留分数）
+    async function leaveGame() {
+        if (!room.value) return
+        const authStore = useAuthStore()
+        const userId = authStore.userId
+        if (!userId) return
+
+        // 先标记自己为不活跃
+        await supabase
+            .from('room_players')
+            .update({ is_active: false })
+            .eq('room_id', room.value.id)
+            .eq('player_id', userId)
+
+        // 检查剩余活跃玩家数：如果自己是最后一个，自动结束房间
+        const remainingActive = activePlayers.value.filter(p => p.player_id !== userId)
+        if (remainingActive.length === 0) {
+            await endGame()
+        }
+    }
+
+    // 房主解散房间（踢掉所有人，关闭房间）
+    async function disbandRoom() {
+        if (!room.value) return
+
+        // 删除所有玩家记录
+        await supabase
+            .from('room_players')
+            .delete()
+            .eq('room_id', room.value.id)
+
+        // 设置房间状态为 finished
+        await supabase
+            .from('rooms')
+            .update({ status: 'finished' })
+            .eq('id', room.value.id)
+    }
+
+    // 转交房主并退出
+    async function transferHost(newHostId) {
+        if (!room.value) return
+        const authStore = useAuthStore()
+
+        // 转交房主
+        await supabase
+            .from('rooms')
+            .update({ host_id: newHostId })
+            .eq('id', room.value.id)
+
+        // 自己标记为不活跃
+        await supabase
+            .from('room_players')
+            .update({ is_active: false })
+            .eq('room_id', room.value.id)
+            .eq('player_id', authStore.userId)
+    }
+
+    // 活跃玩家
+    const activePlayers = computed(() => players.value.filter(p => p.is_active))
+
     // 清理状态
     function reset() {
         unsubscribe()
@@ -303,6 +459,7 @@ export const useRoomStore = defineStore('room', () => {
     return {
         room,
         players,
+        activePlayers,
         rounds,
         loading,
         roomCode,
@@ -318,6 +475,11 @@ export const useRoomStore = defineStore('room', () => {
         startGame,
         recordRound,
         endGame,
+        leaveRoom,
+        leaveGame,
+        disbandRoom,
+        transferHost,
+        kickPlayer,
         reset,
     }
 })

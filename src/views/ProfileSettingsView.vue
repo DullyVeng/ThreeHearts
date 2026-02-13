@@ -12,8 +12,8 @@
     <!-- 头像展示 -->
     <div class="flex flex-col items-center mb-8">
       <div class="relative">
-        <div class="w-24 h-24 avatar-ring flex items-center justify-center bg-bg-dark text-4xl">
-          {{ selectedAvatarEmoji }}
+        <div class="w-24 h-24 avatar-ring flex items-center justify-center bg-bg-dark overflow-hidden">
+          <img :src="selectedAvatarUrl" class="w-full h-full object-cover" />
         </div>
         <div class="absolute -bottom-1 -right-1 w-8 h-8 rounded-full primary-gold-btn flex items-center justify-center">
           <span class="material-icons-round text-bg-dark text-sm">edit</span>
@@ -44,13 +44,13 @@
           :key="avatar.id"
           @click="selectAvatar(avatar)"
           :class="[
-            'aspect-square rounded-xl flex items-center justify-center text-3xl transition-all',
+            'aspect-square rounded-full overflow-hidden flex items-center justify-center transition-all',
             selectedAvatar === avatar.id
-              ? 'bg-gold-500/20 border-2 border-gold-500 scale-105'
-              : 'glass-panel hover:bg-white/10'
+              ? 'ring-2 ring-gold-500 ring-offset-2 ring-offset-bg-dark scale-105'
+              : 'opacity-70 hover:opacity-100'
           ]"
         >
-          {{ avatar.emoji }}
+          <img :src="`/avatars/${avatar.id}.png`" :alt="avatar.name" class="w-full h-full object-cover" />
         </button>
       </div>
     </div>
@@ -87,18 +87,19 @@ const saving = ref(false)
 const saved = ref(false)
 
 const avatarOptions = [
-  { id: 'cat', emoji: '🐱' },
-  { id: 'dog', emoji: '🐶' },
-  { id: 'dragon', emoji: '🐲' },
-  { id: 'tiger', emoji: '🐯' },
-  { id: 'panda', emoji: '🐼' },
-  { id: 'rabbit', emoji: '🐰' },
-  { id: 'monkey', emoji: '🐵' },
-  { id: 'phoenix', emoji: '🦅' },
+  { id: 'cat', name: '猫咪' },
+  { id: 'pig', name: '小猪' },
+  { id: 'rabbit', name: '兔子' },
+  { id: 'fox', name: '狐狸' },
+  { id: 'dog', name: '柴犬' },
+  { id: 'bear', name: '小熊' },
+  { id: 'chick', name: '小鸡' },
+  { id: 'panda', name: '熊猫' },
+  { id: 'mouse', name: '老鼠' },
 ]
 
-const selectedAvatarEmoji = computed(() => {
-  return avatarOptions.find(a => a.id === selectedAvatar.value)?.emoji || '🎴'
+const selectedAvatarUrl = computed(() => {
+  return `/avatars/${selectedAvatar.value}.png`
 })
 
 function selectAvatar(avatar) {

@@ -77,15 +77,24 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useRoomStore } from '../stores/room'
 
+const route = useRoute()
 const router = useRouter()
 const roomStore = useRoomStore()
 const code = ref('')
 const joining = ref(false)
 const errorMsg = ref('')
+
+// 如果 URL 带有 ?code=XXXX，自动填入房间号
+onMounted(() => {
+  const queryCode = route.query.code
+  if (queryCode && typeof queryCode === 'string' && /^\d{4}$/.test(queryCode)) {
+    code.value = queryCode
+  }
+})
 
 function appendDigit(num) {
   if (code.value.length < 4) {
@@ -113,7 +122,12 @@ async function handleJoin() {
   const success = await roomStore.joinRoom(room.id)
   joining.value = false
   if (success) {
-    router.push(`/lobby/${room.id}`)
+    // 根据房间状态跳转到对应页面
+    if (room.status === 'playing') {
+      router.push(`/game/${room.id}`)
+    } else {
+      router.push(`/lobby/${room.id}`)
+    }
   } else {
     errorMsg.value = '加入房间失败，可能已满员'
   }
